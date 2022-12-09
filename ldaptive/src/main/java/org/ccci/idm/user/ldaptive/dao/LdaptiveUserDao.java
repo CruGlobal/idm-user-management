@@ -33,6 +33,7 @@ import org.ccci.idm.user.dao.exception.DaoException;
 import org.ccci.idm.user.dao.exception.ExceededMaximumAllowedResultsException;
 import org.ccci.idm.user.dao.exception.InterruptedDaoException;
 import org.ccci.idm.user.dao.ldap.AbstractLdapUserDao;
+import org.ccci.idm.user.exception.UserAlreadyExistsException;
 import org.ccci.idm.user.ldaptive.Dn;
 import org.ccci.idm.user.ldaptive.LdapGroup;
 import org.ccci.idm.user.ldaptive.dao.exception.LdaptiveDaoException;
@@ -738,6 +739,10 @@ public class LdaptiveUserDao extends AbstractLdapUserDao {
     }
 
     private DaoException convertLdapException(@Nonnull final LdapException e) {
-        return new LdaptiveDaoException(e);
+        if (e.getResultCode() == ResultCode.ENTRY_ALREADY_EXISTS) {
+            throw new UserAlreadyExistsException();
+        } else {
+            throw new LdaptiveDaoException(e);
+        }
     }
 }

@@ -2,6 +2,7 @@ package org.ccci.idm.user.okta.dao.listeners
 
 import org.ccci.idm.user.User
 import org.ccci.idm.user.dao.UserDao
+import org.ccci.idm.user.exception.UserAlreadyExistsException
 import org.ccci.idm.user.okta.dao.OktaUserDao
 
 private val UPDATABLE_ATTRS = setOf(
@@ -42,7 +43,12 @@ class FallbackDaoOktaUserDaoListener(
     }
 
     override fun onUserCreated(user: User) {
-        dao.save(user)
+        try {
+            dao.save(user)
+        } catch (e: UserAlreadyExistsException) {
+            // user already exists, so let's just update the appropriate attributes
+            dao.update(user, *UPDATABLE_ATTRS.toTypedArray())
+        }
     }
 
     override fun onUserUpdated(user: User, vararg attrs: User.Attr) {
