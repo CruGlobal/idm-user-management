@@ -242,6 +242,10 @@ class OktaUserDao(private val okta: Client, private val listeners: List<Listener
                         oktaUser.profile[PROFILE_EMAIL_ALIASES] = user.cruProxyAddresses.toList()
                         changed = true
                     }
+                    User.Attr.ORCA -> {
+                        oktaUser.profile[PROFILE_ORCA] = user.isOrca
+                        changed = true
+                    }
                     // these attributes are still tracked in LDAP but not in Okta
                     User.Attr.FLAGS,
                     User.Attr.SECURITYQA,
