@@ -54,6 +54,8 @@ private const val PROFILE_EMAIL_ALIASES = "emailAliases"
 private const val PROFILE_GR_MASTER_PERSON_ID = "grMasterPersonId"
 private const val PROFILE_GR_PERSON_ID = "thekeyGrPersonId"
 
+private const val PROFILE_ORCA = "orca"
+
 private val DEFAULT_ATTRS = arrayOf(User.Attr.EMAIL, User.Attr.NAME, User.Attr.FLAGS)
 private const val DEACTIVATED_PREFIX = "\$GUID-"
 private const val DEACTIVATED_SUFFIX = "@deactivated.cru.org"
@@ -142,6 +144,7 @@ class OktaUserDao(private val okta: Client, private val listeners: List<Listener
             .putProfileProperty(PROFILE_US_DESIGNATION, user.cruDesignation)
             .putProfileProperty(PROFILE_PHONE_NUMBER, user.telephoneNumber)
             .putProfileProperty(PROFILE_EMAIL_ALIASES, user.cruProxyAddresses.toList())
+            .putProfileProperty(PROFILE_ORCA, user.isOrca)
             .setGroups(initialGroups)
 
             // Location profile attributes
@@ -237,6 +240,10 @@ class OktaUserDao(private val okta: Client, private val listeners: List<Listener
                     }
                     User.Attr.CRU_PROXY_ADDRESSES -> {
                         oktaUser.profile[PROFILE_EMAIL_ALIASES] = user.cruProxyAddresses.toList()
+                        changed = true
+                    }
+                    User.Attr.ORCA -> {
+                        oktaUser.profile[PROFILE_ORCA] = user.isOrca
                         changed = true
                     }
                     // these attributes are still tracked in LDAP but not in Okta

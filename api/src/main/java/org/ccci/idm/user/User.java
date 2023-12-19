@@ -30,7 +30,7 @@ public class User implements Cloneable, Serializable {
     public enum Attr {
         EMAIL, PASSWORD, NAME, LOGINTIME, FLAGS, SELFSERVICEKEYS, DOMAINSVISITED, FACEBOOK, GLOBALREGISTRY, LOCATION,
         EMPLOYEE_NUMBER, CRU_DESIGNATION, CONTACT, CRU_PREFERRED_NAME, CRU_PROXY_ADDRESSES, HUMAN_RESOURCE, SECURITYQA,
-        MFA_SECRET, MFA_INTRUDER_DETECTION
+        MFA_SECRET, MFA_INTRUDER_DETECTION, ORCA
     }
 
     @Nullable
@@ -113,6 +113,7 @@ public class User implements Cloneable, Serializable {
     private String cruSubMinistryCode;
     @Nonnull
     private Collection<String> cruProxyAddresses = Sets.newHashSet();
+    private boolean orca;
 
     // other attributes (used by relay)
     private String city;
@@ -464,6 +465,14 @@ public class User implements Cloneable, Serializable {
 
     @Deprecated
     public void setCruPasswordHistory(@Nullable final Collection<String> history) {
+    }
+
+    public boolean isOrca() {
+        return orca;
+    }
+
+    public void setOrca(boolean orca) {
+        this.orca = orca;
     }
 
     public String getCity() {
