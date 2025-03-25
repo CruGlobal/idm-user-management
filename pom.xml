@@ -38,7 +38,7 @@
 
     <commons-collections.version>3.2.2</commons-collections.version>
     <commons-validator.version>1.6</commons-validator.version>
-    <google-guava.version>27.0.1-jre</google-guava.version>
+    <google-guava.version>29.0-jre</google-guava.version>
     <inspektr.version>1.7.GA</inspektr.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
     <joda-time.version>2.4</joda-time.version>
