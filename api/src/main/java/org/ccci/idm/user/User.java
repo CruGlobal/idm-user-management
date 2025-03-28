@@ -313,10 +313,12 @@ public class User implements Cloneable, Serializable {
         this.pwdChangedTime = time;
     }
 
+    @Deprecated
     public boolean isEmailVerified() {
         return this.emailVerified;
     }
 
+    @Deprecated
     public void setEmailVerified(final boolean verified) {
         this.emailVerified = verified;
     }
