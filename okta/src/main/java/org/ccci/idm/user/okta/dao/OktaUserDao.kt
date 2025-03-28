@@ -2,7 +2,6 @@ package org.ccci.idm.user.okta.dao
 
 import com.okta.sdk.client.Client
 import com.okta.sdk.resource.ResourceException
-import com.okta.sdk.resource.user.EmailStatus
 import com.okta.sdk.resource.user.UserBuilder
 import com.okta.sdk.resource.user.UserStatus
 import org.ccci.idm.user.Group
@@ -354,8 +353,7 @@ class OktaUserDao(private val okta: Client, private val listeners: List<Listener
                 legacyDeactivated -> profile.getString(PROFILE_ORIGINAL_EMAIL) ?: profile.email
                 else -> profile.email
             }
-            isEmailVerified =
-                credentials.emails.firstOrNull { email.equals(it.value, true) }?.status == EmailStatus.VERIFIED
+            isEmailVerified = true
 
             firstName = profile.firstName
             preferredName = profile.getString(PROFILE_NICK_NAME)
